@@ -13,15 +13,17 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-    const allowedTypes = /jpeg|jpg|png/;
+    const allowedExtensions = [".jpg", ".jpeg", ".png"];
 
-    const extname = allowedTypes.test(
-        path.extname(file.originalname).toLowerCase()
-    );
+    const extension = path
+        .extname(file.originalname)
+        .toLowerCase();
 
-    const mimetype = allowedTypes.test(file.mimetype);
+    console.log("Nama file:", file.originalname);
+    console.log("MIME type:", file.mimetype);
+    console.log("Extension:", extension);
 
-    if (extname && mimetype) {
+    if (allowedExtensions.includes(extension)) {
         cb(null, true);
     } else {
         cb(new Error("Hanya file JPG, JPEG, dan PNG yang diperbolehkan."));
