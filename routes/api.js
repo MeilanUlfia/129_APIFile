@@ -5,15 +5,28 @@ const komikController = require('../controller/komikController');
 const penulisController = require('../controller/penulisController');
 const genreController = require('../controller/genreController');
 const authMiddleware = require('../middleware/authMiddleware');
-
+const uploadMiddleware = require('../middleware/uploadMiddleware');
 
 router.post('/register', penulisController.register);
 router.post('/login', penulisController.login);
 
 // Komik routes
 router.get('/komik', komikController.getAll);
-router.post('/komik', authMiddleware, uploadMiddleware.single("gambar"), komikController.create);
-router.put('/komik/:id', authMiddleware, uploadMiddleware.single("gambar"), komikController.update);
+
+router.post(
+    '/komik',
+    authMiddleware,
+    uploadMiddleware.single("gambar"),
+    komikController.create
+);
+
+router.put(
+    '/komik/:id',
+    authMiddleware,
+    uploadMiddleware.single("gambar"),
+    komikController.update
+);
+
 router.delete('/komik/:id', authMiddleware, komikController.remove);
 
 // Genre routes
